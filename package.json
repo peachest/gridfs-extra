@@ -1,0 +1,68 @@
+{
+  "name": "gridfs-extra",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "description": "A simple wrapper for the MongoDB GridFSBucket-API",
+  "keywords": [
+    "gridfs",
+    "promise"
+  ],
+  "author": {
+    "name": "peachest",
+    "email": "1938913473@qq.com",
+    "url": ""
+  },
+  "homepage": "",
+  "bugs": "https://github.com/peachest/gridfs-extra/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peachest/gridfs-extra.git"
+  },
+  "type": "module",
+  "files": [
+    "bin/",
+    "dist/"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "build": "rollup -cw"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-json": "^6.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@types/fs-extra": "^11.0.1",
+    "@types/lodash-es": "^4.17.6",
+    "@types/node": "^18.14.6",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-tsdoc": "^0.2.17",
+    "prettier": "^2.8.4",
+    "rollup": "^3.18.0",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-dts": "^5.2.0",
+    "rollup-plugin-node-externals": "^5.1.2",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "tslib": "^2.5.0",
+    "type-fest": "^3.6.1",
+    "typescript": "^5.0.4"
+  },
+  "peerDependencies": {
+    "fs-extra": "^11.1.0",
+    "lodash-es": "^4.17.21",
+    "log4js": "^6.9.1",
+    "mongodb": "^5.5.0",
+    "shelljs": "^0.8.5"
+  }
+}
