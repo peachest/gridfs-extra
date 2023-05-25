@@ -4,6 +4,7 @@
   ],
   "include": [
     "src/",
+    "example/",
     ".eslintrc.cjs",
     "rollup.config.mjs"
   ],

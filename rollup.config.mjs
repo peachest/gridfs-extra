@@ -1,13 +1,15 @@
-import nodeResolve from "@rollup/plugin-node-resolve" ;
-import commonjs from "@rollup/plugin-commonjs" ;
-import typescript from "rollup-plugin-typescript2" ;
-import clear from "rollup-plugin-clear" ;
-import rollupPluginDts from "rollup-plugin-dts";
-import json from "@rollup/plugin-json" ;
+import nodeResolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import typescript from "rollup-plugin-typescript2";
+import clear from "rollup-plugin-clear";
+import dts from "rollup-plugin-dts";
+import json from "@rollup/plugin-json";
 import path from "path";
 import * as url from "url";
 import fs from "fs-extra"
 import externals from "rollup-plugin-node-externals"
+import {visualizer} from "rollup-plugin-visualizer";
+import keepHeaderComment from "rollup-plugin-keep-header-comment";
 
 
 const __filename = url.fileURLToPath(import.meta.url)
@@ -63,20 +65,26 @@ const basePlugins = [
     externals()
 ];
 
-export default [{
-    input,
-    output: emitFormats.map(format => {
+export default [
+    ...emitFormats.map(format =>{
         return {
-            format,
-            file: resolve(path.join(outputDir, outputFileMapper[format])),
-            name,
-            exports: "named",
-            sourcemap,
+            input,
+            output: {
+                file: resolve(path.join(outputDir, outputFileMapper[format])),
+                format,
+                name,
+                exports: "named",
+                sourcemap,
+            },
+            plugins:[
+                ...basePlugins,
+                ...["sunburst", "treemap", "network", "raw-data"].map(template => visualizer({
+                    filename: resolve(path.join("stat", `${format}.stat.${template}${template === "raw-data" ? "raw" : ".html"}`)),
+                    template
+                })),
+            ]
         }
     }),
-    plugins: basePlugins,
-
-},
     {
         input,
         output: [{
@@ -85,9 +93,13 @@ export default [{
         }],
         plugins: [
             ...basePlugins,
-            rollupPluginDts({
-                tsconfig
-            })
+            dts({
+                tsconfig,
+            }),
+            keepHeaderComment({
+                sourcemap,
+                pattern: /@packageDocumentation/,
+            }),
         ],
         external: ["type-fest"]
     }
